@@ -7,38 +7,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import RecordTable from '@/layouts/record-table';
 
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-
-import { Check, X } from 'lucide-react';
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'User',
         href: '/user',
     },
 ];
-
-const approveBorrowRequest = async (borrowId: number, bookId: number) => {
-    router.post('/api/borrow/approve-borrow', {
-        id: borrowId,
-        book_id: bookId,
-    });
-}
-
-const approveReturnRequest = async (borrowId: number, bookId: number) => {
-    router.post('/api/borrow/approve-return', {
-        id: borrowId,
-        book_id: bookId,
-    });
-}
 
 const banUser = async (userId: number) => {
     router.post('/api/user/ban', {

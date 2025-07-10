@@ -13,6 +13,7 @@ import {
 import { Check, X } from 'lucide-react';
 
 const approveBorrowRequest = async (borrowId: number, bookId: number, type: string) => {
+    console.log('Approving borrow request', borrowId, bookId, type);
     router.post('/api/borrow/approve-borrow', {
         id: borrowId,
         book_id: bookId,
@@ -83,7 +84,7 @@ export default function RecordTable({title, caption, list, type } : { title: any
                                 { type && (
                                     ((txn.type === "borrow" || txn.type === "reserve" ) && txn.status === "pending") ? (
                                         <TableCell className="text-right">
-                                            <Button onClick={() => approveBorrowRequest(txn.id, txn.book_id, "borrow")} variant="outline" size="sm" className="w-fit">
+                                            <Button onClick={() => approveBorrowRequest(txn.id, txn.book_id, txn.type)} variant="outline" size="sm" className="w-fit">
                                                 Approve
                                             </Button>
                                             <Button onClick={() => rejectBorrowRequest(txn.id, txn.book_id)} variant="outline" size="sm" className="w-fit">
@@ -107,7 +108,7 @@ export default function RecordTable({title, caption, list, type } : { title: any
                                             </TableCell>
                                     ) : (txn.type === 'reserve' && txn.status === "approved" && txn.start_date === new Date().toISOString().slice(0, 10)) ? (
                                             <TableCell className="text-right">
-                                            <Button onClick={() => approveBorrowRequest(txn.id, txn.book_id, "reserve")} variant="outline" size="sm" className="w-fit">
+                                            <Button onClick={() => approveBorrowRequest(txn.id, txn.book_id, "borrow")} variant="outline" size="sm" className="w-fit">
                                                 Approve
                                             </Button>
                                             <Button onClick={() => rejectBorrowRequest(txn.id, txn.book_id)} variant="outline" size="sm" className="w-fit">

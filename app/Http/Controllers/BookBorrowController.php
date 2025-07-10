@@ -112,7 +112,11 @@ class BookBorrowController extends Controller
         }
 
         try {
-        $borrow = BookBorrow::findOrFail($request->id)->update(['status' => 'approved']);
+            if ($request->type === 'reserve') {
+                $borrow = BookBorrow::findOrFail($request->id)->update(['status' => 'approved', 'type' => 'reserve']);
+            } else if ($request->type === 'borrow') {
+                $borrow = BookBorrow::findOrFail($request->id)->update(['status' => 'approved', 'type' => 'borrow']);
+            }
         } catch (\Exception $e) {
             Log::error('Error updating borrow status', [
                 'error' => $e->getMessage(),

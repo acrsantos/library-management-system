@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/table";
 import { Check, X } from 'lucide-react';
 
-const approveBorrowRequest = async (borrowId: number, bookId: number) => {
+const approveBorrowRequest = async (borrowId: number, bookId: number, type: string) => {
     router.post('/api/borrow/approve-borrow', {
         id: borrowId,
         book_id: bookId,
+        type: type,
     });
 }
 
@@ -82,7 +83,7 @@ export default function RecordTable({title, caption, list, type } : { title: any
                                 { type && (
                                     ((txn.type === "borrow" || txn.type === "reserve" ) && txn.status === "pending") ? (
                                         <TableCell className="text-right">
-                                            <Button onClick={() => approveBorrowRequest(txn.id, txn.book_id)} variant="outline" size="sm" className="w-fit">
+                                            <Button onClick={() => approveBorrowRequest(txn.id, txn.book_id, "borrow")} variant="outline" size="sm" className="w-fit">
                                                 Approve
                                             </Button>
                                             <Button onClick={() => rejectBorrowRequest(txn.id, txn.book_id)} variant="outline" size="sm" className="w-fit">
@@ -103,6 +104,15 @@ export default function RecordTable({title, caption, list, type } : { title: any
                                                 <Button onClick={() => approveReturnRequest(txn.id, txn.book_id)} variant="outline" size="sm" className="w-fit">
                                                         Mark as returned
                                                 </Button>
+                                            </TableCell>
+                                    ) : (txn.type === 'reserve' && txn.status === "approved" && txn.start_date === new Date().toISOString().slice(0, 10)) ? (
+                                            <TableCell className="text-right">
+                                            <Button onClick={() => approveBorrowRequest(txn.id, txn.book_id, "reserve")} variant="outline" size="sm" className="w-fit">
+                                                Approve
+                                            </Button>
+                                            <Button onClick={() => rejectBorrowRequest(txn.id, txn.book_id)} variant="outline" size="sm" className="w-fit">
+                                                Reject
+                                            </Button>
                                             </TableCell>
                                     ) : (txn.type === 'reserve' && txn.status === "approved") ? (
                                             <TableCell className="text-right">

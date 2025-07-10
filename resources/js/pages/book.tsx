@@ -166,14 +166,14 @@ const RequestPopover = ({bookItem, userBanned}: {bookItem: Book, userBanned: boo
                     <div className="grid gap-0">
                         <h1 className='m-0'>Date</h1>
                         <Calendar className="flex w-full content-center justify-center p-0" mode="range" selected={date} onSelect={(range: DateRange) => {
-                            if (range?.from && range.from < new Date(new Date().setHours(0, 0, 0, 0))) {
-                                if (requestType === 'borrow') {
-                                    setDate({from: new Date(new Date().setHours(0, 0, 0, 0)), to: undefined});
-                                    return;
-                                } else {
-                                    return;
-                                }
-                            }
+                            // if (range?.from && range.from < new Date(new Date().setHours(0, 0, 0, 0))) {
+                            //     if (requestType === 'borrow') {
+                            //         setDate({from: new Date(new Date().setHours(0, 0, 0, 0)), to: undefined});
+                            //         return;
+                            //     } else {
+                            //         return;
+                            //     }
+                            // }
                             if (range?.from && range?.to) {
                                 const duration = (range.to.getTime() - range.from.getTime()) / (1000 * 60 * 60 * 24);
                                 if (duration > 7) {
